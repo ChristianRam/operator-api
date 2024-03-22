@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "2b2ddbc3-b2df-4f15-8ba7-5043e0345ee8",
+		"name": "Inclusion Cloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13100588"
+	},
+	"item": [
+		{
+			"name": "GetMaximum",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/operator/maximum?divider=7&remainder=5&limit=12345",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"operator",
+						"maximum"
+					],
+					"query": [
+						{
+							"key": "divider",
+							"value": "7"
+						},
+						{
+							"key": "remainder",
+							"value": "5"
+						},
+						{
+							"key": "limit",
+							"value": "12345"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMaximum",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"divider\": 7,\r\n    \"remainder\": 5,\r\n    \"limit\": 12345\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/operator/maximum",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"operator",
+						"maximum"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
