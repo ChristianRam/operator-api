@@ -15,3 +15,6 @@ Project built in Spring Boot with operations execution functionalities.
 ## Run
 
 Run the following gradle command in the project directory `.\gradlew bootRun`
+
+## Swagger
+Acces to Swagger UI using endpoint `/swagger-ui/index.html`
