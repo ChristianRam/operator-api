@@ -3,6 +3,7 @@ plugins {
 	id 'jacoco'
 	id 'org.springframework.boot' version '2.7.16'
 	id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+	id "org.sonarqube" version "4.0.0.2929"
 }
 
 group = 'com.inclusioncloud'
@@ -37,4 +38,76 @@ tasks.named('bootBuildImage') {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+sonarqube {
+	properties {
+		property "sonar.projectName", "operator-api"
+		property "sonar.host.url", "http://localhost:9000"
+		property "sonar.token", "sqa_76fe007e2315f84eec6b1ac0f13cf7b7b93b1516"
+	}
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required = true
+	}
+
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					"**/*Application.class",
+					"**/config/*",
+					"**/constants/*",
+					"**/controller/*",
+					"**/dto/*",
+					"**/exception/*"
+			])
+		}))
+	}
+}
+
+jacoco {
+	toolVersion = "0.8.7"
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			element = 'CLASS'
+			excludes = [
+					'**.*Application*',
+					'**.config.*',
+					'**.constants.*',
+					'**.controller.*',
+					'**.dto.*',
+					'**.exception.*'
+			]
+			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.80
+			}
+		}
+	}
+}
+
+check.dependsOn jacocoTestCoverageVerification
+
+afterEvaluate {
+	sonarqube {
+		properties {
+			properties["sonar.jacoco.reportPath"] = "${buildDir}/jacoco/test.exec"
+			properties["sonar.coverage.exclusions"] =
+					"**/*Application*," +
+					"**/config/*," +
+					"**/constants/*," +
+					"**/controller/*," +
+					"**/dto/*," +
+					"**/exception/*"
+
+		}
+	}
 }
