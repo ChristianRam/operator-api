@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Controller to get operations
@@ -26,7 +27,7 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping(ResourceEndpoint.OPERATOR)
-//TODO cross origin
+@CrossOrigin
 public class OperatorController {
 
   private static final String MESSAGE_INCOMING_REQUEST =
@@ -45,7 +46,6 @@ public class OperatorController {
     this.operatorService = operatorService;
   }
 
-
   /**
    * Consume service for get maximum
    *
@@ -55,25 +55,21 @@ public class OperatorController {
    * @return object {@link ResponseDTO} with the result
    */
   @ApiOperation("Calculate maximum")
-  @ApiResponses(value = {
-          @ApiResponse(
-                  code = 200,
-                  message = OPERATION_SUCCESSFUL,
-                  response = ResponseDTO.class
-          ),
-          @ApiResponse(
-                  code = 400,
-                  message = BAD_REQUEST,
-                  response = ResponseDTO.class
-          )
-  })
+  @ApiResponses(
+      value = {
+        @ApiResponse(code = 200, message = OPERATION_SUCCESSFUL, response = ResponseDTO.class),
+        @ApiResponse(code = 400, message = BAD_REQUEST, response = ResponseDTO.class)
+      })
   @GetMapping(ResourceEndpoint.MAXIMUM)
-  public ResponseEntity<ResponseDTO<Integer>> getMaximum(
+  public ResponseEntity<ResponseDTO<MaximumDTO>> getMaximum(
       @RequestParam Integer divider, @RequestParam Integer remainder, @RequestParam Integer limit) {
+
     log.info(MESSAGE_INCOMING_REQUEST, divider, remainder, limit);
+
     return ResponseEntity.ok(
         new ResponseDTO<>(
-            operatorService.calculateMaximum(divider, remainder, limit),
+            operatorService.getMaximum(
+                MaximumDTO.builder().divider(divider).remainder(remainder).limit(limit).build()),
             new NotificationDTO(OPERATION_SUCCESSFUL, HttpStatus.OK.value())));
   }
 
@@ -84,31 +80,18 @@ public class OperatorController {
    * @return object {@link ResponseDTO} with the result
    */
   @ApiOperation("Calculate maximum")
-  @ApiResponses(value = {
-          @ApiResponse(
-                  code = 200,
-                  message = OPERATION_SUCCESSFUL,
-                  response = ResponseDTO.class
-          ),
-          @ApiResponse(
-                  code = 400,
-                  message = BAD_REQUEST,
-                  response = ResponseDTO.class
-          )
-  })
+  @ApiResponses(
+      value = {
+        @ApiResponse(code = 200, message = OPERATION_SUCCESSFUL, response = ResponseDTO.class),
+        @ApiResponse(code = 400, message = BAD_REQUEST, response = ResponseDTO.class)
+      })
   @PostMapping(ResourceEndpoint.MAXIMUM)
-  public ResponseEntity<ResponseDTO<Integer>> getMaximumPost(
-          @Valid @RequestBody MaximumDTO maximumDTO) {
-    log.info(
-        MESSAGE_INCOMING_REQUEST,
-        maximumDTO.getDivider(),
-        maximumDTO.getRemainder(),
-        maximumDTO.getLimit());
+  public ResponseEntity<ResponseDTO<List<MaximumDTO>>> getMaximumList(
+      @Valid @RequestBody List<MaximumDTO> maximumList) {
 
     return ResponseEntity.ok(
         new ResponseDTO<>(
-            operatorService.calculateMaximum(
-                maximumDTO.getDivider(), maximumDTO.getRemainder(), maximumDTO.getLimit()),
+            operatorService.getMaximumList(maximumList),
             new NotificationDTO(OPERATION_SUCCESSFUL, HttpStatus.OK.value())));
   }
 }

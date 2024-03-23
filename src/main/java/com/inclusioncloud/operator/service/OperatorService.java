@@ -1,5 +1,9 @@
 package com.inclusioncloud.operator.service;
 
+import com.inclusioncloud.operator.dto.MaximumDTO;
+
+import java.util.List;
+
 /**
  * @author <a href="christianram19@hotmail.com">Christian Ramirez</a>
  * @version 1.0.0
@@ -8,12 +12,18 @@ package com.inclusioncloud.operator.service;
 public interface OperatorService {
 
   /**
-   * Calculate maximum possible integer from 0 to limit that has the remainder modulo divider
+   * Calls calculateMaximum() and get result
    *
-   * @param divider divider value
-   * @param remainder remainder value
-   * @param limit limit value
-   * @return maximum
+   * @param maximum with data for operation maximum
+   * @return maximum object with the result
    */
-  Integer calculateMaximum(Integer divider, Integer remainder, Integer limit);
+  MaximumDTO getMaximum(MaximumDTO maximum);
+
+  /**
+   * Calls calculateMaximum() and get result for each element object in the list
+   *
+   * @param maximumList object list with data for operation maximum
+   * @return list of maximum object with the results
+   */
+  List<MaximumDTO> getMaximumList(List<MaximumDTO> maximumList);
 }

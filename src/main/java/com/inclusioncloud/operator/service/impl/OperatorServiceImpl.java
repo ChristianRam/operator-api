@@ -1,8 +1,11 @@
 package com.inclusioncloud.operator.service.impl;
 
+import com.inclusioncloud.operator.dto.MaximumDTO;
 import com.inclusioncloud.operator.exception.InvalidInputDataException;
 import com.inclusioncloud.operator.service.OperatorService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Operator service
@@ -14,23 +17,50 @@ import org.springframework.stereotype.Service;
 @Service
 public class OperatorServiceImpl implements OperatorService {
 
-  public static final String ERROR_MESSAGE_DIVIDER_LESS =
+  private static final String ERROR_MESSAGE_DIVIDER_LESS =
       "The divider value must be greater than or equal to 2";
-  public static final String ERROR_MESSAGE_DIVIDER_GREATER =
+  private static final String ERROR_MESSAGE_DIVIDER_GREATER =
       "The divider value must be less than or equal to 1.000.000.000";
-  public static final String ERROR_MESSAGE_REMAINDER_LESS =
+  private static final String ERROR_MESSAGE_REMAINDER_LESS =
       "The remainder value must be greater than or equal to 0";
-  public static final String ERROR_MESSAGE_REMAINDER_GREATER =
+  private static final String ERROR_MESSAGE_REMAINDER_GREATER =
       "The remainder value must be less than %s (divider)";
-  public static final String ERROR_MESSAGE_LIMIT_LESS =
+  private static final String ERROR_MESSAGE_LIMIT_LESS =
       "The limit value must be greater than or equal to %s (remainder)";
-  public static final String ERROR_MESSAGE_LIMIT_GREATER =
+  private static final String ERROR_MESSAGE_LIMIT_GREATER =
       "The divider value must be less than or equal to 1.000.000.000";
-  public static final Integer BILLION_VALUE = 1000000000;
+  private static final Integer BILLION_VALUE = 1000000000;
 
   /** {@inheritDoc} */
   @Override
-  public Integer calculateMaximum(Integer divider, Integer remainder, Integer limit) {
+  public MaximumDTO getMaximum(MaximumDTO maximum) {
+    maximum.setResult(
+        calculateMaximum(maximum.getDivider(), maximum.getRemainder(), maximum.getLimit()));
+
+    return maximum;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public List<MaximumDTO> getMaximumList(List<MaximumDTO> maximumList) {
+    maximumList.forEach(
+        maximum ->
+            maximum.setResult(
+                calculateMaximum(
+                    maximum.getDivider(), maximum.getRemainder(), maximum.getLimit())));
+
+    return maximumList;
+  }
+
+  /**
+   * Calculate maximum possible integer from 0 to limit that has the remainder modulo divider
+   *
+   * @param divider divider value
+   * @param remainder remainder value
+   * @param limit limit value
+   * @return maximum
+   */
+  private Integer calculateMaximum(Integer divider, Integer remainder, Integer limit) {
     verifyDivider(divider);
     verifyRemainder(remainder, divider);
     verifyLimit(limit, remainder);

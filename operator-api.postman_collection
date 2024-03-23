@@ -47,7 +47,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"divider\": 7,\r\n    \"remainder\": 5,\r\n    \"limit\": 12345\r\n}",
+					"raw": "[\r\n    {\r\n        \"divider\": 7,\r\n        \"remainder\": 5,\r\n        \"limit\": 12345\r\n    },\r\n    {\r\n        \"divider\": 5,\r\n        \"remainder\": 0,\r\n        \"limit\": 4\r\n    },\r\n    {\r\n        \"divider\": 10,\r\n        \"remainder\": 5,\r\n        \"limit\": 15\r\n    },\r\n    {\r\n        \"divider\": 17,\r\n        \"remainder\": 8,\r\n        \"limit\": 54321\r\n    },\r\n    {\r\n        \"divider\": 499999993,\r\n        \"remainder\": 9,\r\n        \"limit\": 1000000000\r\n    },\r\n    {\r\n        \"divider\": 10,\r\n        \"remainder\": 5,\r\n        \"limit\": 187\r\n    },\r\n    {\r\n        \"divider\": 2,\r\n        \"remainder\": 0,\r\n        \"limit\": 999999999\r\n    }\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"

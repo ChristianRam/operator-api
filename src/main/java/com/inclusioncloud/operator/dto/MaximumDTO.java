@@ -1,5 +1,6 @@
 package com.inclusioncloud.operator.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -13,6 +14,7 @@ import java.io.Serializable;
  * @since 1.0.0
  */
 @Data
+@Builder
 public class MaximumDTO implements Serializable {
 
   @NotNull private Integer divider;
@@ -20,6 +22,8 @@ public class MaximumDTO implements Serializable {
   @NotNull private Integer remainder;
 
   @NotNull private Integer limit;
+
+  private Integer result;
 
   private static final long serialVersionUID = 3213733001917187168L;
 }
