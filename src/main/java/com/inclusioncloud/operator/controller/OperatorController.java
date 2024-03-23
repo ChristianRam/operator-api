@@ -30,8 +30,9 @@ import java.util.List;
 @CrossOrigin
 public class OperatorController {
 
-  private static final String MESSAGE_INCOMING_REQUEST =
+  private static final String MESSAGE_INCOMING_GET_MAXIMUM =
       "Incoming request getMaximum() method with values divider: {}, remainder: {}, limit: {}";
+  public static final String MESSAGE_INCOMING_GET_MAXIMUM_LIST = "Incoming getMaximumList() method";
   public static final String OPERATION_SUCCESSFUL = "Operation Successful";
   public static final String BAD_REQUEST = "Bad request";
 
@@ -64,7 +65,7 @@ public class OperatorController {
   public ResponseEntity<ResponseDTO<MaximumDTO>> getMaximum(
       @RequestParam Integer divider, @RequestParam Integer remainder, @RequestParam Integer limit) {
 
-    log.info(MESSAGE_INCOMING_REQUEST, divider, remainder, limit);
+    log.info(MESSAGE_INCOMING_GET_MAXIMUM, divider, remainder, limit);
 
     return ResponseEntity.ok(
         new ResponseDTO<>(
@@ -76,7 +77,7 @@ public class OperatorController {
   /**
    * Consume service for get maximum
    *
-   * @param maximumDTO request object
+   * @param maximumList list of request objects
    * @return object {@link ResponseDTO} with the result
    */
   @ApiOperation("Calculate maximum")
@@ -88,6 +89,8 @@ public class OperatorController {
   @PostMapping(ResourceEndpoint.MAXIMUM)
   public ResponseEntity<ResponseDTO<List<MaximumDTO>>> getMaximumList(
       @Valid @RequestBody List<MaximumDTO> maximumList) {
+
+    log.info(MESSAGE_INCOMING_GET_MAXIMUM_LIST);
 
     return ResponseEntity.ok(
         new ResponseDTO<>(
