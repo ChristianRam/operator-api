@@ -45,7 +45,7 @@ sonarqube {
 	properties {
 		property "sonar.projectName", "operator-api"
 		property "sonar.host.url", "http://localhost:9000"
-		property "sonar.token", "sqa_76fe007e2315f84eec6b1ac0f13cf7b7b93b1516"
+		property "sonar.token", "sqa_54cc4880c515c3e7c19174df578762ec5c2b390a"
 	}
 }
 
