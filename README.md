@@ -21,10 +21,12 @@ Project built in Spring Boot with operations execution functionalities.
 ```console
    .\gradlew bootRun
    ```
+5. Access the application http://localhost:8080.
 
 
 ## Swagger
 Acces to Swagger UI using endpoint `/swagger-ui/index.html` in root URI
 
 ## Notes
-You can find the app deployed in: [Operator-api](http://ec2-3-89-56-177.compute-1.amazonaws.com:8080/swagger-ui/index.html)
+- You can find the app deployed in: [Operator-api](http://ec2-3-89-56-177.compute-1.amazonaws.com:8080/swagger-ui/index.html)
+- Postman collection is attached in root directory for testing
